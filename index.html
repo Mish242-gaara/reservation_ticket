@@ -1,0 +1,439 @@
+
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@400;600;700;800&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  .ms-root { font-family: 'Nunito', sans-serif; min-height: 100vh; color: #fff; position: relative; overflow-x: hidden; }
+  .ms-root::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: url('background.jpg') center/cover no-repeat fixed;
+    opacity: 0.36;
+    filter: brightness(0.35) saturate(1.05);
+    z-index: 0;
+  }
+  .ms-root::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(10,22,40,0.92) 0%, rgba(10,22,40,0.78) 100%);
+    z-index: 1;
+    pointer-events: none;
+  }
+  .ms-bg-pattern { position: fixed; top:0;left:0;right:0;bottom:0; background-image: radial-gradient(circle at 20% 50%, rgba(30,80,180,0.12) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(180,20,20,0.08) 0%, transparent 40%); pointer-events: none; z-index: 2; }
+  .ms-content { position: relative; z-index: 3; }
+  .ms-header { text-align: left; padding: 2.5rem 1rem 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.08); background: rgba(10,22,40,0.82); backdrop-filter: blur(10px); display: flex; flex-direction: column; gap: 1.5rem; }
+  .ms-header-top { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+  .ms-header-brand { display: flex; align-items: center; gap: 1rem; min-width: 0; }
+  .ms-header-brand-text { min-width: 0; }
+  .ms-logos { display: flex; align-items: center; justify-content: flex-start; gap: 12px; margin-bottom: 0; flex-wrap: wrap; }
+  .ms-logo-image { width: 72px; height: 72px; border-radius: 50%; overflow: hidden; background: #fff; display: grid; place-items: center; border: 1px solid rgba(255,255,255,0.15); }
+  .ms-logo-image img { width: 100%; height: 100%; object-fit: cover; clip-path: circle(50% at 50% 50%); }
+  .ms-logo-badge { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; padding: 6px 12px; font-size: 11px; font-weight: 700; letter-spacing: 1px; color: rgba(255,255,255,0.8); }
+  .ms-logo-badge.red { background: rgba(180,20,20,0.3); border-color: rgba(200,40,40,0.5); color: #ff8080; }
+  .ms-event-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.18em; opacity: 0.75; color: #fff; margin-bottom: 0.4rem; }
+  .ms-event-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.6rem, 5vw, 4rem); line-height: 1; margin-bottom: 0.3rem; color: #fff; }
+  .ms-event-title .accent { color: #e74c3c; }
+  .ms-event-subtitle { font-size: 1rem; opacity: 0.86; max-width: 40rem; line-height: 1.45; }
+  .ms-header-meta { display: flex; align-items: center; justify-content: flex-start; flex-wrap: wrap; gap: 16px; margin-top: 1rem; }
+  .ms-meta-item { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.88); background: rgba(255,255,255,0.08); padding: 8px 14px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.15); }
+  .ms-meta-item svg { width: 16px; height: 16px; flex-shrink: 0; }
+  .ms-countdown { margin: 0; display: inline-flex; flex-direction: column; align-items: flex-end; gap: 4px; color: rgba(255,255,255,0.92); min-width: 180px; }
+  .ms-countdown-label { font-size: 11px; letter-spacing: 1.8px; text-transform: uppercase; opacity: 0.78; }
+  .ms-countdown-timer { font-family: 'Bebas Neue', sans-serif; font-size: clamp(1.3rem, 3vw, 1.9rem); letter-spacing: 1px; background: rgba(255,255,255,0.08); padding: 10px 18px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.16); text-align: center; min-width: 180px; }
+  .ms-title { display: none; }
+  .ms-meta { display: none; }
+  .ms-logos { justify-content: flex-start; }
+  .ms-footer { text-align: left; padding: 2rem 1rem 1.5rem; border-top: 1px solid rgba(255,255,255,0.08); font-size: 13px; color: rgba(255,255,255,0.9); background: rgba(10,22,40,0.7); backdrop-filter: blur(16px); border-radius: 0 0 28px 28px; }
+  .ms-footer-grid { display: grid; grid-template-columns: repeat(3, minmax(180px, 1fr)); gap: 1.25rem; align-items: start; }
+  .ms-footer-col { min-width: 0; }
+  .ms-footer-title { font-size: 0.95rem; font-weight: 800; margin-bottom: 0.7rem; color: #fff; text-transform: uppercase; letter-spacing: 1px; }
+  .ms-footer-text { line-height: 1.6; opacity: 0.92; }
+  .ms-footer-item { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 0.75rem; }
+  .ms-footer-item svg { width: 18px; height: 18px; flex-shrink: 0; color: #e74c3c; margin-top: 3px; }
+  .ms-footer-phone, .ms-footer-block { line-height: 1.6; opacity: 0.92; }
+  .ms-footer-bottom { margin-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 1rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.75rem; font-size: 12px; color: rgba(255,255,255,0.65); }
+  .ms-card-icon { font-size: 0; margin-bottom: 8px; }
+  .ms-card-icon svg { width: 32px; height: 32px; color: currentColor; }
+  .ms-success-icon { width: 60px; height: 60px; margin: 0 auto 16px; display: grid; place-items: center; border-radius: 50%; border: 2px solid rgba(255,255,255,0.22); color: #2ecc71; }
+  .ms-selector { max-width: 720px; margin: 2rem auto; padding: 1.5rem 1.25rem 1.25rem; background: rgba(12,26,46,0.72); border: 1px solid rgba(255,255,255,0.08); border-radius: 28px; backdrop-filter: blur(12px); }
+  .ms-section-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; letter-spacing: 1.5px; margin-bottom: 1rem; color: rgba(255,255,255,0.94); }
+  .ms-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 1.5rem; }
+  @media (max-width: 560px) { .ms-cards { grid-template-columns: 1fr; } }
+  @media (max-width: 720px) and (min-width: 561px) { .ms-cards { grid-template-columns: 1fr 1fr; } .ms-card.ctech { grid-column: span 2; } }
+  @media (max-width: 900px) {
+    .ms-header-top { flex-direction: column; align-items: stretch; }
+    .ms-countdown { align-items: flex-start; min-width: auto; }
+    .ms-header-brand { width: 100%; }
+    .ms-header-meta { justify-content: center; }
+    .ms-footer-grid { grid-template-columns: 1fr; }
+    .ms-footer-bottom { flex-direction: column; align-items: flex-start; }
+    .ms-countdown-timer { min-width: auto; width: 100%; }
+  }
+  .ms-card { border-radius: 14px; border: 2px solid transparent; padding: 1.1rem; cursor: pointer; transition: border-color 0.2s, background 0.2s; position: relative; overflow: hidden; }
+  .ms-card.free { background: rgba(25,60,140,0.4); border-color: rgba(60,120,255,0.4); }
+  .ms-card.free:hover, .ms-card.free.selected { border-color: #4a90e2; background: rgba(25,60,140,0.65); }
+  .ms-card.ctech { background: rgba(20,100,60,0.35); border-color: rgba(40,180,100,0.4); }
+  .ms-card.ctech:hover, .ms-card.ctech.selected { border-color: #2ecc71; background: rgba(20,100,60,0.6); }
+  .ms-card.paid { background: rgba(150,20,20,0.35); border-color: rgba(220,60,60,0.4); }
+  .ms-card.paid:hover, .ms-card.paid.selected { border-color: #e74c3c; background: rgba(150,20,20,0.55); }
+  .ms-card.selected .ms-check { opacity: 1 !important; transform: scale(1) !important; }
+  .ms-check { position: absolute; top: 10px; right: 10px; width: 22px; height: 22px; border-radius: 50%; background: #27ae60; display: flex; align-items: center; justify-content: center; opacity: 0; transform: scale(0.5); transition: opacity 0.2s, transform 0.2s; }
+  .ms-check svg { width: 12px; height: 12px; }
+  .ms-card-type { font-size: 10px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; opacity: 0.65; margin-bottom: 3px; }
+  .ms-card-name { font-weight: 800; font-size: 0.95rem; margin-bottom: 4px; }
+  .ms-card-price { font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; letter-spacing: 1px; line-height: 1; }
+  .ms-card-price .fcfa { font-size: 0.85rem; font-family: 'Nunito', sans-serif; font-weight: 700; opacity: 0.8; }
+  .ms-card-note { font-size: 11px; opacity: 0.6; margin-top: 4px; line-height: 1.4; }
+  .ms-form { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 1.5rem; margin-bottom: 1.5rem; display: none; }
+  .ms-form.visible { display: block; }
+  .ms-form label { display: block; font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; opacity: 0.6; margin-bottom: 6px; margin-top: 16px; }
+  .ms-form label:first-child { margin-top: 0; }
+  .ms-form input, .ms-form select { width: 100%; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; padding: 10px 14px; color: #fff; font-size: 14px; font-family: 'Nunito', sans-serif; outline: none; transition: border-color 0.2s; }
+  .ms-form input::placeholder { color: rgba(255,255,255,0.3); }
+  .ms-form input:focus, .ms-form select:focus { border-color: rgba(100,160,255,0.6); }
+  .ms-form select option { background: #1a2a4a; color: #fff; }
+  .ms-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 480px) { .ms-form-row { grid-template-columns: 1fr; } }
+  .ms-info-box { border-radius: 10px; padding: 10px 14px; font-size: 12px; margin-top: 12px; line-height: 1.5; }
+  .ms-info-box.blue { background: rgba(25,60,140,0.3); border: 1px solid rgba(60,120,255,0.3); color: rgba(180,210,255,0.9); }
+  .ms-info-box.green { background: rgba(20,100,60,0.3); border: 1px solid rgba(40,180,100,0.3); color: rgba(150,255,180,0.9); }
+  .ms-info-box.red { background: rgba(150,20,20,0.3); border: 1px solid rgba(220,60,60,0.3); color: rgba(255,160,160,0.9); }
+  .ms-error { background: rgba(200,40,40,0.2); border: 1px solid rgba(200,40,40,0.4); border-radius: 8px; padding: 10px 14px; font-size: 13px; color: #ff9999; margin-top: 12px; display: none; }
+  .ms-btn { width: 100%; background: #c0392b; color: #fff; border: none; border-radius: 12px; padding: 16px; font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; letter-spacing: 2px; cursor: pointer; transition: background 0.2s, transform 0.1s; display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 1.25rem; }
+  .ms-btn:hover { background: #a93226; }
+  .ms-btn:active { transform: scale(0.98); }
+  .ms-success { display: none; text-align: center; padding: 2rem 1rem; }
+  .ms-success.visible { display: block; }
+  .ms-ticket-preview { background: #fff; color: #1a1a2e; border-radius: 16px; overflow: hidden; max-width: 420px; margin: 0 auto 1.5rem; }
+  .ms-ticket-left { background: #1a3a7c; padding: 1.25rem 1.5rem; }
+  .ms-ticket-label { font-size: 9px; font-weight: 800; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 4px; }
+  .ms-ticket-event { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; color: #fff; letter-spacing: 1.5px; line-height: 1; }
+  .ms-ticket-event .red { color: #e74c3c; }
+  .ms-ticket-body { padding: 1.25rem 1.5rem; background: #fff; }
+  .ms-ticket-row { display: flex; justify-content: space-between; align-items: baseline; padding: 5px 0; border-bottom: 1px dashed #e0e0e0; font-size: 13px; }
+  .ms-ticket-row:last-child { border-bottom: none; }
+  .ms-ticket-row .key { color: #888; font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .ms-ticket-row .val { font-weight: 800; color: #1a1a2e; }
+  .ms-ticket-footer { background: #1a1a2e; padding: 12px 1.5rem; display: flex; justify-content: space-between; align-items: center; }
+  .ms-ticket-footer .admit { font-size: 9px; font-weight: 800; letter-spacing: 2px; color: rgba(255,255,255,0.5); text-transform: uppercase; }
+  .ms-ticket-badge { color: #fff; font-size: 10px; font-weight: 800; padding: 3px 10px; border-radius: 20px; letter-spacing: 1px; }
+  .ms-whatsapp-btn { display: flex; align-items: center; justify-content: center; gap: 8px; background: #25D366; color: #fff; border: none; border-radius: 12px; padding: 14px 24px; font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; letter-spacing: 2px; cursor: pointer; width: 100%; max-width: 420px; margin: 0 auto 12px; transition: background 0.2s; }
+  .ms-whatsapp-btn:hover { background: #1da856; }
+  .ms-reset-btn { background: transparent; border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.6); border-radius: 10px; padding: 10px 20px; font-size: 13px; cursor: pointer; font-family: 'Nunito', sans-serif; width: 100%; max-width: 420px; margin: 0 auto; display: block; }
+</style>
+
+<div class="ms-root">
+  <div class="ms-bg-pattern"></div>
+  <div class="ms-content">
+
+    <div class="ms-header">
+      <div class="ms-header-top">
+        <div class="ms-header-brand">
+          <div class="ms-logo-image"><img src="1770838992689.jpg" alt="Logo ESTAM" /></div>
+          <div class="ms-header-brand-text">
+            <div class="ms-event-label">Journée Intégration</div>
+            <div class="ms-event-title">Marche <span class="accent">Sportive</span></div>
+            <div class="ms-event-subtitle">ESTAM BDE organise une marche conviviale entre CTECH et la plage. Rejoignez-nous pour une matinée sportive et festive.</div>
+          </div>
+        </div>
+        <div class="ms-countdown">
+          <div class="ms-countdown-label">Départ dans</div>
+          <div class="ms-countdown-timer" id="countdownTimer">Calcul en cours...</div>
+        </div>
+      </div>
+      <div class="ms-logos">
+        <div class="ms-logo-badge">ESTAM</div>
+        <div class="ms-logo-badge">C-TECH</div>
+        <div class="ms-logo-badge red">BDE</div>
+      </div>
+      <div class="ms-header-meta">
+        <div class="ms-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Sam. 25 Avril 2026
+        </div>
+        <div class="ms-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Départ 07h00
+        </div>
+        <div class="ms-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          CTECH → La Plage
+        </div>
+      </div>
+    </div>
+
+    <div class="ms-selector">
+      <div id="mainForm">
+        <div class="ms-section-title">Choisissez votre ticket</div>
+
+        <div class="ms-cards">
+          <!-- ESTAM GRATUIT -->
+          <div class="ms-card free" id="cardFree" onclick="selectCard('free')">
+            <div class="ms-check" id="checkFree"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <div class="ms-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 10l8-4 8 4-8 4-8-4z"/><path d="M4 10v4a4 4 0 004 4h8a4 4 0 004-4v-4"/></svg></div>
+            <div class="ms-card-type">Étudiant</div>
+            <div class="ms-card-name">ESTAM</div>
+            <div class="ms-card-price" style="color:#4a90e2">GRATUIT</div>
+            <div class="ms-card-note">Inscription via délégué de classe obligatoire</div>
+          </div>
+
+          <!-- C-TECH 1000F -->
+          <div class="ms-card ctech" id="cardCtech" onclick="selectCard('ctech')">
+            <div class="ms-check" id="checkCtech"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <div class="ms-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M2 19h20"/></svg></div>
+            <div class="ms-card-type">Apprenant</div>
+            <div class="ms-card-name">C-TECH</div>
+            <div class="ms-card-price" style="color:#2ecc71">1 000 <span class="fcfa">FCFA</span></div>
+            <div class="ms-card-note">Centre de formation partenaire</div>
+          </div>
+
+          <!-- EXTERNE 1000F -->
+          <div class="ms-card paid" id="cardPaid" onclick="selectCard('paid')">
+            <div class="ms-check" id="checkPaid"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <div class="ms-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="8" cy="8" r="3"/><circle cx="16" cy="8" r="3"/><path d="M3 21c1.5-3 4-5 7-5s5.5 2 7 5"/></svg></div>
+            <div class="ms-card-type">Invité</div>
+            <div class="ms-card-name">Externe</div>
+            <div class="ms-card-price" style="color:#e74c3c">1 000 <span class="fcfa">FCFA</span></div>
+            <div class="ms-card-note">Ami, famille, frère, sœur…</div>
+          </div>
+        </div>
+
+        <!-- FORMULAIRE -->
+        <div class="ms-form" id="reservForm">
+          <label>Nom complet</label>
+          <input type="text" id="fname" placeholder="Ex : Jean-Paul Mbemba" />
+
+          <div class="ms-form-row">
+            <div>
+              <label>Téléphone</label>
+              <input type="tel" id="fphone" placeholder="+242 06 ..." />
+            </div>
+            <div id="classCol">
+              <label id="classLabel">Classe / Filière</label>
+              <input type="text" id="fclass" placeholder="Ex : L2 Réseaux" />
+            </div>
+          </div>
+
+          <div id="delegueRow" style="display:none">
+            <label>Délégué de classe</label>
+            <input type="text" id="fdelegue" placeholder="Nom de votre délégué" />
+          </div>
+
+          <div id="sourceRow" style="display:none">
+            <label>Comment avez-vous connu l'événement ?</label>
+            <select id="fsource">
+              <option value="">-- Sélectionnez --</option>
+              <option value="ami">Un ami / étudiant ESTAM ou C-TECH</option>
+              <option value="whatsapp">WhatsApp / Réseaux sociaux</option>
+              <option value="affiche">Affiche / Flyer</option>
+              <option value="autre">Autre</option>
+            </select>
+          </div>
+
+          <div class="ms-info-box blue" id="noteEstam" style="display:none">
+            ℹ️ Ticket <strong>GRATUIT</strong> pour les étudiants ESTAM. Inscription obligatoire auprès de votre délégué de classe pour figurer sur la liste officielle.
+          </div>
+          <div class="ms-info-box green" id="noteCtech" style="display:none">
+            Apprenant C-TECH — centre de formation partenaire de cet événement. Ticket à <strong>1 000 FCFA</strong>. Votre paiement sera confirmé par l'organisation.
+          </div>
+          <div class="ms-info-box red" id="noteExterne" style="display:none">
+            Ticket externe à <strong>1 000 FCFA</strong>. Places limitées — réservez vite ! Votre paiement sera confirmé par l'organisation.
+          </div>
+
+          <div class="ms-error" id="formError">Veuillez remplir tous les champs obligatoires.</div>
+
+          <button class="ms-btn" onclick="submitForm()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 12V22H4V12"/><path d="M22 7H2v5h20V7z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 010-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 000-5C13 2 12 7 12 7z"/></svg>
+            Réserver mon ticket
+          </button>
+        </div>
+
+        <div style="text-align:center; padding: 1rem 0 0; font-size:12px; color:rgba(255,255,255,0.4);">
+          <strong style="color:rgba(255,255,255,0.7)">Infos :</strong> +242 06 807 26 32 · +242 06 414 91 49
+        </div>
+      </div>
+
+      <!-- SUCCESS -->
+      <div class="ms-success" id="successView">
+        <div class="ms-success-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17 4 12"/></svg></div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:2px;margin-bottom:4px">Réservation confirmée !</div>
+        <div style="font-size:14px;opacity:0.6;margin-bottom:1.5rem">Votre demande a bien été enregistrée.</div>
+
+        <div class="ms-ticket-preview">
+          <div class="ms-ticket-left">
+            <div class="ms-ticket-label">ESTAM BDE organise</div>
+            <div class="ms-ticket-event">Marche <span class="red">Sp</span>rtive</div>
+            <div class="ms-ticket-label" style="margin-top:4px">Journée Intégration · 25 Avril 2026</div>
+          </div>
+          <div class="ms-ticket-body">
+            <div class="ms-ticket-row"><span class="key">Participant</span><span class="val" id="tName">—</span></div>
+            <div class="ms-ticket-row"><span class="key">Téléphone</span><span class="val" id="tPhone">—</span></div>
+            <div class="ms-ticket-row"><span class="key">Profil</span><span class="val" id="tType">—</span></div>
+            <div class="ms-ticket-row"><span class="key">Classe</span><span class="val" id="tClass">—</span></div>
+            <div class="ms-ticket-row"><span class="key">Montant</span><span class="val" id="tPrice">—</span></div>
+            <div class="ms-ticket-row"><span class="key">Départ</span><span class="val">07h00 · CTECH → Plage</span></div>
+          </div>
+          <div class="ms-ticket-footer">
+            <span class="admit">Admit One · 1 personne</span>
+            <span class="ms-ticket-badge" id="tBadge">—</span>
+          </div>
+        </div>
+
+        <div style="max-width:420px;margin:0 auto;width:100%">
+          <button class="ms-whatsapp-btn" onclick="sendWhatsApp()">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Envoyer sur WhatsApp
+          </button>
+          <div style="font-size:12px;opacity:0.45;margin-bottom:1rem;text-align:center">Un message pré-rempli sera envoyé à l'organisation pour validation.</div>
+          <button class="ms-reset-btn" onclick="resetForm()">Faire une autre réservation</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="ms-footer">
+      <div class="ms-footer-grid">
+        <div class="ms-footer-col">
+          <div class="ms-footer-title">Info-line</div>
+          <div class="ms-footer-phone">(+242) 06 822 91 78 / 05 557 58 32</div>
+          <div class="ms-footer-phone">(+242) 06 447 03 01 / 05 670 24 71</div>
+        </div>
+        <div class="ms-footer-col">
+          <div class="ms-footer-title">Brazzaville</div>
+          <div class="ms-footer-text">Site 1 : 233 rue de la Libération OCH (ref. entre la poissonnerie du Rail et le commissariat de l'OCH).</div>
+          <div class="ms-footer-text">Site 2 : 22 rue Likouala, Immeuble Dabo en face de la BCH, Poto-Poto.</div>
+        </div>
+        <div class="ms-footer-col">
+          <div class="ms-footer-title">Pointe-Noire</div>
+          <div class="ms-footer-text">Site 1 : SCOPRSE, N° 82 Avenue Nelson Mandela entre rond-point Ilama et la station Puma.</div>
+          <div class="ms-footer-text">Site 2 : OCH bord, immeuble entre les arrêts Deux Palmiers et Pharmacie La Grande.</div>
+        </div>
+      </div>
+      <div class="ms-footer-bottom">
+        <div><strong>ESTAM BDE</strong> · Marche Sportive 2026</div>
+        <div>Contactez-nous pour plus d’infos et pour toute inscription.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  let selectedType = null;
+  const eventDate = new Date(2026, 3, 25, 7, 0, 0);
+
+  function updateCountdown() {
+    const now = new Date();
+    const diff = eventDate - now;
+    const timer = document.getElementById('countdownTimer');
+    if (!timer) return;
+    if (diff <= 0) {
+      timer.textContent = 'Départ imminent';
+      return;
+    }
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((diff / (1000 * 60)) % 60);
+    const seconds = Math.floor((diff / 1000) % 60);
+    timer.textContent = `${days}j ${hours}h ${minutes}m ${seconds}s`;
+  }
+  setInterval(updateCountdown, 1000);
+  updateCountdown();
+
+  const cards = {
+    free:  { el: 'cardFree',  check: 'checkFree'  },
+    ctech: { el: 'cardCtech', check: 'checkCtech' },
+    paid:  { el: 'cardPaid',  check: 'checkPaid'  }
+  };
+
+  function selectCard(type) {
+    selectedType = type;
+    Object.keys(cards).forEach(k => {
+      const card = document.getElementById(cards[k].el);
+      const chk  = document.getElementById(cards[k].check);
+      card.classList.toggle('selected', k === type);
+      chk.style.opacity   = k === type ? '1' : '0';
+      chk.style.transform = k === type ? 'scale(1)' : 'scale(0.5)';
+    });
+
+    document.getElementById('reservForm').classList.add('visible');
+    document.getElementById('formError').style.display = 'none';
+
+    document.getElementById('delegueRow').style.display  = type === 'free'  ? 'block' : 'none';
+    document.getElementById('sourceRow').style.display   = type === 'paid'  ? 'block' : 'none';
+    document.getElementById('noteEstam').style.display   = type === 'free'  ? 'block' : 'none';
+    document.getElementById('noteCtech').style.display   = type === 'ctech' ? 'block' : 'none';
+    document.getElementById('noteExterne').style.display = type === 'paid'  ? 'block' : 'none';
+
+    const classLabel = document.getElementById('classLabel');
+    classLabel.textContent = type === 'ctech' ? 'Formation / Niveau' : 'Classe / Filière';
+    document.getElementById('fclass').placeholder = type === 'ctech' ? 'Ex : Dev Web Niveau 2' : 'Ex : L2 Réseaux';
+
+    setTimeout(() => document.getElementById('reservForm').scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+  }
+
+  function submitForm() {
+    const name  = document.getElementById('fname').value.trim();
+    const phone = document.getElementById('fphone').value.trim();
+    const cls   = document.getElementById('fclass').value.trim();
+    const err   = document.getElementById('formError');
+
+    if (!selectedType)    { err.style.display = 'block'; err.textContent = 'Veuillez choisir un type de ticket.'; return; }
+    if (!name || !phone)  { err.style.display = 'block'; err.textContent = 'Nom et téléphone sont obligatoires.'; return; }
+    err.style.display = 'none';
+
+    const delegue = document.getElementById('fdelegue').value.trim();
+    const source  = document.getElementById('fsource').value;
+
+    const typeLabels = { free: 'Étudiant ESTAM (Gratuit)', ctech: 'Apprenant C-TECH (1 000 FCFA)', paid: 'Externe / Invité (1 000 FCFA)' };
+    const prices     = { free: 'GRATUIT', ctech: '1 000 FCFA', paid: '1 000 FCFA' };
+    const badges     = { free: 'ÉTUDIANT', ctech: 'C-TECH', paid: 'EXTERNE' };
+    const badgeColors= { free: '#1a5276', ctech: '#1a6b3a', paid: '#c0392b' };
+
+    document.getElementById('tName').textContent  = name;
+    document.getElementById('tPhone').textContent = phone;
+    document.getElementById('tType').textContent  = typeLabels[selectedType];
+    document.getElementById('tClass').textContent = cls || '—';
+    document.getElementById('tPrice').textContent = prices[selectedType];
+    document.getElementById('tBadge').textContent = badges[selectedType];
+    document.getElementById('tBadge').style.background = badgeColors[selectedType];
+
+    window._res = { name, phone, cls, delegue, source, type: selectedType };
+
+    document.getElementById('mainForm').style.display = 'none';
+    document.getElementById('successView').classList.add('visible');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function sendWhatsApp() {
+    const r = window._res;
+    if (!r) return;
+    const labels = { free: 'Étudiant ESTAM (GRATUIT)', ctech: 'Apprenant C-TECH (1 000 FCFA)', paid: 'Externe / Invité (1 000 FCFA)' };
+    let msg = `*MARCHE SPORTIVE – Réservation Ticket*\n\n`;
+    msg += `*Nom :* ${r.name}\n`;
+    msg += `*Téléphone :* ${r.phone}\n`;
+    if (r.cls) msg += `*Classe/Formation :* ${r.cls}\n`;
+    msg += `*Type de ticket :* ${labels[r.type]}\n`;
+    if (r.delegue) msg += `*Délégué :* ${r.delegue}\n`;
+    if (r.source)  msg += `*Source :* ${r.source}\n`;
+    msg += `\nSam. 25 Avril 2026 · 07h00 · CTECH → Plage`;
+
+    const url = `https://wa.me/242064149149?text=${encodeURIComponent(msg)}`;
+    window.open(url, '_blank');
+  }
+
+  function resetForm() {
+    selectedType = null;
+    ['fname','fphone','fclass','fdelegue'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('fsource').value = '';
+    Object.keys(cards).forEach(k => {
+      document.getElementById(cards[k].el).classList.remove('selected');
+      document.getElementById(cards[k].check).style.opacity = '0';
+      document.getElementById(cards[k].check).style.transform = 'scale(0.5)';
+    });
+    document.getElementById('reservForm').classList.remove('visible');
+    document.getElementById('mainForm').style.display = 'block';
+    document.getElementById('successView').classList.remove('visible');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
