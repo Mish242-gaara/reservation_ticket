@@ -1,9 +1,15 @@
-
-
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@400;600;700;800&display=swap');
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  .ms-root { font-family: 'Nunito', sans-serif; min-height: 100vh; color: #fff; position: relative; overflow-x: hidden; display: flex; flex-direction: column; }
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Marche Sportive ESTAM</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@400;600;700;800&display=swap');
+    html, body { min-height: 100%; width: 100%; }
+    body { margin: 0; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    .ms-root { font-family: 'Nunito', sans-serif; min-height: 100vh; color: #fff; position: relative; overflow-x: hidden; display: flex; flex-direction: column; }
   .ms-root::before {
     content: '';
     position: fixed;
@@ -45,15 +51,15 @@
   .ms-title { display: none; }
   .ms-meta { display: none; }
   .ms-logos { justify-content: flex-start; }
-  .ms-footer { text-align: left; padding: 2rem 1rem 1.5rem; border-top: 1px solid rgba(255,255,255,0.08); font-size: 13px; color: rgba(255,255,255,0.9); background: rgba(10,22,40,0.7); backdrop-filter: blur(16px); border-radius: 0 0 28px 28px; margin-top: auto; }
+  .ms-footer { text-align: left; padding: 2rem 1rem 1.5rem; border-top: 1px solid rgba(255,255,255,0.14); font-size: 13px; color: rgba(255,255,255,0.95); background: rgba(4,12,28,0.92); backdrop-filter: blur(18px); border-radius: 0 0 28px 28px; margin-top: auto; }
   .ms-footer-grid { display: grid; grid-template-columns: repeat(3, minmax(180px, 1fr)); gap: 1.25rem; align-items: start; }
   .ms-footer-col { min-width: 0; }
-  .ms-footer-title { font-size: 0.95rem; font-weight: 800; margin-bottom: 0.7rem; color: #fff; text-transform: uppercase; letter-spacing: 1px; }
-  .ms-footer-text { line-height: 1.6; opacity: 0.92; }
+  .ms-footer-title { font-size: 0.95rem; font-weight: 800; margin-bottom: 0.7rem; color: #ffffff; text-transform: uppercase; letter-spacing: 1px; }
+  .ms-footer-text { line-height: 1.6; color: rgba(255,255,255,0.96); }
   .ms-footer-item { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 0.75rem; }
   .ms-footer-item svg { width: 18px; height: 18px; flex-shrink: 0; color: #e74c3c; margin-top: 3px; }
-  .ms-footer-phone, .ms-footer-block { line-height: 1.6; opacity: 0.92; }
-  .ms-footer-bottom { margin-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 1rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.75rem; font-size: 12px; color: rgba(255,255,255,0.65); }
+  .ms-footer-phone, .ms-footer-block { line-height: 1.6; color: rgba(255,255,255,0.96); }
+  .ms-footer-bottom { margin-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.14); padding-top: 1rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.75rem; font-size: 12px; color: rgba(255,255,255,0.84); }
   .ms-card-icon { font-size: 0; margin-bottom: 8px; }
   .ms-card-icon svg { width: 32px; height: 32px; color: currentColor; }
   .ms-success-icon { width: 60px; height: 60px; margin: 0 auto 16px; display: grid; place-items: center; border-radius: 50%; border: 2px solid rgba(255,255,255,0.22); color: #2ecc71; }
@@ -438,3 +444,5 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 </script>
+</body>
+</html>
