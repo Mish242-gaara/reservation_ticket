@@ -10,128 +10,113 @@
     body { margin: 0; }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     .ms-root { font-family: 'Nunito', sans-serif; min-height: 100vh; color: #fff; position: relative; overflow-x: hidden; display: flex; flex-direction: column; }
-  .ms-root::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background: url('background.jpg') center/cover no-repeat fixed;
-    opacity: 0.36;
-    filter: brightness(0.35) saturate(1.05);
-    z-index: 0;
-  }
-  .ms-root::after {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background: linear-gradient(180deg, rgba(10,22,40,0.92) 0%, rgba(10,22,40,0.78) 100%);
-    z-index: 1;
-    pointer-events: none;
-  }
-  .ms-bg-pattern { position: fixed; top:0;left:0;right:0;bottom:0; background-image: radial-gradient(circle at 20% 50%, rgba(30,80,180,0.12) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(180,20,20,0.08) 0%, transparent 40%); pointer-events: none; z-index: 2; }
-  .ms-content { position: relative; z-index: 3; flex: 1; }
-  .ms-header { text-align: left; padding: 2.5rem 1rem 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.08); background: rgba(10,22,40,0.82); backdrop-filter: blur(10px); display: flex; flex-direction: column; gap: 1.5rem; }
-  .ms-header-top { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
-  .ms-header-brand { display: flex; align-items: center; gap: 1rem; min-width: 0; }
-  .ms-header-brand-text { min-width: 0; }
-  .ms-logos { display: flex; align-items: center; justify-content: flex-start; gap: 12px; margin-bottom: 0; flex-wrap: wrap; }
-  .ms-logo-image { width: 72px; height: 72px; border-radius: 50%; overflow: hidden; background: #fff; display: grid; place-items: center; border: 1px solid rgba(255,255,255,0.15); }
-  .ms-logo-image img { width: 100%; height: 100%; object-fit: cover; clip-path: circle(50% at 50% 50%); }
-  .ms-logo-badge { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; padding: 6px 12px; font-size: 11px; font-weight: 700; letter-spacing: 1px; color: rgba(255,255,255,0.8); }
-  .ms-logo-badge.red { background: rgba(180,20,20,0.3); border-color: rgba(200,40,40,0.5); color: #ff8080; }
-  .ms-event-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.18em; opacity: 0.75; color: #fff; margin-bottom: 0.4rem; }
-  .ms-event-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.6rem, 5vw, 4rem); line-height: 1; margin-bottom: 0.3rem; color: #fff; }
-  .ms-event-title .accent { color: #e74c3c; }
-  .ms-event-subtitle { font-size: 1rem; opacity: 0.86; max-width: 40rem; line-height: 1.45; }
-  .ms-header-meta { display: flex; align-items: center; justify-content: flex-start; flex-wrap: wrap; gap: 16px; margin-top: 1rem; }
-  .ms-meta-item { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.88); background: rgba(255,255,255,0.08); padding: 8px 14px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.15); }
-  .ms-meta-item svg { width: 16px; height: 16px; flex-shrink: 0; }
-  .ms-countdown { margin: 0; display: inline-flex; flex-direction: column; align-items: flex-end; gap: 4px; color: rgba(255,255,255,0.92); min-width: 180px; }
-  .ms-countdown-label { font-size: 11px; letter-spacing: 1.8px; text-transform: uppercase; opacity: 0.78; }
-  .ms-countdown-timer { font-family: 'Bebas Neue', sans-serif; font-size: clamp(1.3rem, 3vw, 1.9rem); letter-spacing: 1px; background: rgba(255,255,255,0.08); padding: 10px 18px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.16); text-align: center; min-width: 180px; }
-  .ms-title { display: none; }
-  .ms-meta { display: none; }
-  .ms-logos { justify-content: flex-start; }
-  .ms-footer { text-align: left; padding: 2rem 1rem 1.5rem; border-top: 1px solid rgba(255,255,255,0.14); font-size: 13px; color: rgba(255,255,255,0.95); background: rgba(4,12,28,0.92); backdrop-filter: blur(18px); border-radius: 0 0 28px 28px; margin-top: auto; }
-  .ms-footer-grid { display: grid; grid-template-columns: repeat(3, minmax(180px, 1fr)); gap: 1.25rem; align-items: start; }
-  .ms-footer-col { min-width: 0; }
-  .ms-footer-title { font-size: 0.95rem; font-weight: 800; margin-bottom: 0.7rem; color: #ffffff; text-transform: uppercase; letter-spacing: 1px; }
-  .ms-footer-text { line-height: 1.6; color: rgba(255,255,255,0.96); }
-  .ms-footer-item { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 0.75rem; }
-  .ms-footer-item svg { width: 18px; height: 18px; flex-shrink: 0; color: #e74c3c; margin-top: 3px; }
-  .ms-footer-phone, .ms-footer-block { line-height: 1.6; color: rgba(255,255,255,0.96); }
-  .ms-footer-bottom { margin-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.14); padding-top: 1rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.75rem; font-size: 12px; color: rgba(255,255,255,0.84); }
-  .ms-card-icon { font-size: 0; margin-bottom: 8px; }
-  .ms-card-icon svg { width: 32px; height: 32px; color: currentColor; }
-  .ms-success-icon { width: 60px; height: 60px; margin: 0 auto 16px; display: grid; place-items: center; border-radius: 50%; border: 2px solid rgba(255,255,255,0.22); color: #2ecc71; }
-  .ms-selector { max-width: 720px; margin: 2rem auto; padding: 1.5rem 1.25rem 1.25rem; background: rgba(12,26,46,0.72); border: 1px solid rgba(255,255,255,0.08); border-radius: 28px; backdrop-filter: blur(12px); }
-  .ms-section-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; letter-spacing: 1.5px; margin-bottom: 1rem; color: rgba(255,255,255,0.94); }
-  .ms-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 1.5rem; }
-  @media (max-width: 560px) { .ms-cards { grid-template-columns: 1fr; } }
-  @media (max-width: 720px) and (min-width: 561px) { .ms-cards { grid-template-columns: 1fr 1fr; } .ms-card.ctech { grid-column: span 2; } }
-  @media (max-width: 900px) {
-    .ms-header-top { flex-direction: column; align-items: stretch; }
-    .ms-countdown { align-items: flex-start; min-width: auto; }
-    .ms-header-brand { width: 100%; }
-    .ms-header-meta { justify-content: center; }
-    .ms-footer-grid { grid-template-columns: 1fr; }
-    .ms-footer-bottom { flex-direction: column; align-items: flex-start; }
-    .ms-countdown-timer { min-width: auto; width: 100%; }
-  }
-  .ms-card { border-radius: 14px; border: 2px solid transparent; padding: 1.1rem; cursor: pointer; transition: border-color 0.2s, background 0.2s; position: relative; overflow: hidden; }
-  .ms-card.free { background: rgba(25,60,140,0.4); border-color: rgba(60,120,255,0.4); }
-  .ms-card.free:hover, .ms-card.free.selected { border-color: #4a90e2; background: rgba(25,60,140,0.65); }
-  .ms-card.ctech { background: rgba(20,100,60,0.35); border-color: rgba(40,180,100,0.4); }
-  .ms-card.ctech:hover, .ms-card.ctech.selected { border-color: #2ecc71; background: rgba(20,100,60,0.6); }
-  .ms-card.paid { background: rgba(150,20,20,0.35); border-color: rgba(220,60,60,0.4); }
-  .ms-card.paid:hover, .ms-card.paid.selected { border-color: #e74c3c; background: rgba(150,20,20,0.55); }
-  .ms-card.selected .ms-check { opacity: 1 !important; transform: scale(1) !important; }
-  .ms-check { position: absolute; top: 10px; right: 10px; width: 22px; height: 22px; border-radius: 50%; background: #27ae60; display: flex; align-items: center; justify-content: center; opacity: 0; transform: scale(0.5); transition: opacity 0.2s, transform 0.2s; }
-  .ms-check svg { width: 12px; height: 12px; }
-  .ms-card-type { font-size: 10px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; opacity: 0.65; margin-bottom: 3px; }
-  .ms-card-name { font-weight: 800; font-size: 0.95rem; margin-bottom: 4px; }
-  .ms-card-price { font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; letter-spacing: 1px; line-height: 1; }
-  .ms-card-price .fcfa { font-size: 0.85rem; font-family: 'Nunito', sans-serif; font-weight: 700; opacity: 0.8; }
-  .ms-card-note { font-size: 11px; opacity: 0.6; margin-top: 4px; line-height: 1.4; }
-  .ms-form { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 1.5rem; margin-bottom: 1.5rem; display: none; }
-  .ms-form.visible { display: block; }
-  .ms-form label { display: block; font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; opacity: 0.6; margin-bottom: 6px; margin-top: 16px; }
-  .ms-form label:first-child { margin-top: 0; }
-  .ms-form input, .ms-form select { width: 100%; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; padding: 10px 14px; color: #fff; font-size: 14px; font-family: 'Nunito', sans-serif; outline: none; transition: border-color 0.2s; }
-  .ms-form input::placeholder { color: rgba(255,255,255,0.3); }
-  .ms-form input:focus, .ms-form select:focus { border-color: rgba(100,160,255,0.6); }
-  .ms-form select option { background: #1a2a4a; color: #fff; }
-  .ms-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  @media (max-width: 480px) { .ms-form-row { grid-template-columns: 1fr; } }
-  .ms-info-box { border-radius: 10px; padding: 10px 14px; font-size: 12px; margin-top: 12px; line-height: 1.5; }
-  .ms-info-box.blue { background: rgba(25,60,140,0.3); border: 1px solid rgba(60,120,255,0.3); color: rgba(180,210,255,0.9); }
-  .ms-info-box.green { background: rgba(20,100,60,0.3); border: 1px solid rgba(40,180,100,0.3); color: rgba(150,255,180,0.9); }
-  .ms-info-box.red { background: rgba(150,20,20,0.3); border: 1px solid rgba(220,60,60,0.3); color: rgba(255,160,160,0.9); }
-  .ms-error { background: rgba(200,40,40,0.2); border: 1px solid rgba(200,40,40,0.4); border-radius: 8px; padding: 10px 14px; font-size: 13px; color: #ff9999; margin-top: 12px; display: none; }
-  .ms-btn { width: 100%; background: #c0392b; color: #fff; border: none; border-radius: 12px; padding: 16px; font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; letter-spacing: 2px; cursor: pointer; transition: background 0.2s, transform 0.1s; display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 1.25rem; }
-  .ms-btn:hover { background: #a93226; }
-  .ms-btn:active { transform: scale(0.98); }
-  .ms-success { display: none; text-align: center; padding: 2rem 1rem; }
-  .ms-success.visible { display: block; }
-  .ms-ticket-preview { background: #fff; color: #1a1a2e; border-radius: 16px; overflow: hidden; max-width: 420px; margin: 0 auto 1.5rem; }
-  .ms-ticket-left { background: #1a3a7c; padding: 1.25rem 1.5rem; }
-  .ms-ticket-label { font-size: 9px; font-weight: 800; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 4px; }
-  .ms-ticket-event { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; color: #fff; letter-spacing: 1.5px; line-height: 1; }
-  .ms-ticket-event .red { color: #e74c3c; }
-  .ms-ticket-body { padding: 1.25rem 1.5rem; background: #fff; }
-  .ms-ticket-row { display: flex; justify-content: space-between; align-items: baseline; padding: 5px 0; border-bottom: 1px dashed #e0e0e0; font-size: 13px; }
-  .ms-ticket-row:last-child { border-bottom: none; }
-  .ms-ticket-row .key { color: #888; font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; }
-  .ms-ticket-row .val { font-weight: 800; color: #1a1a2e; }
-  .ms-ticket-footer { background: #1a1a2e; padding: 12px 1.5rem; display: flex; justify-content: space-between; align-items: center; }
-  .ms-ticket-footer .admit { font-size: 9px; font-weight: 800; letter-spacing: 2px; color: rgba(255,255,255,0.5); text-transform: uppercase; }
-  .ms-ticket-badge { color: #fff; font-size: 10px; font-weight: 800; padding: 3px 10px; border-radius: 20px; letter-spacing: 1px; }
-  .ms-whatsapp-btn { display: flex; align-items: center; justify-content: center; gap: 8px; background: #25D366; color: #fff; border: none; border-radius: 12px; padding: 14px 24px; font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; letter-spacing: 2px; cursor: pointer; width: 100%; max-width: 420px; margin: 0 auto 12px; transition: background 0.2s; }
-  .ms-whatsapp-btn:hover { background: #1da856; }
-  .ms-email-btn { display: flex; align-items: center; justify-content: center; gap: 8px; background: #007bff; color: #fff; border: none; border-radius: 12px; padding: 14px 24px; font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; letter-spacing: 2px; cursor: pointer; width: 100%; max-width: 420px; margin: 0 auto 12px; transition: background 0.2s; }
-  .ms-email-btn:hover { background: #0056b3; }
-  .ms-reset-btn { background: transparent; border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.6); border-radius: 10px; padding: 10px 20px; font-size: 13px; cursor: pointer; font-family: 'Nunito', sans-serif; width: 100%; max-width: 420px; margin: 0 auto; display: block; }
-</style>
-
+    .ms-root::before { content: ''; position: fixed; inset: 0; background: url('background.jpg') center/cover no-repeat fixed; opacity: 0.36; filter: brightness(0.35) saturate(1.05); z-index: 0; }
+    .ms-root::after { content: ''; position: fixed; inset: 0; background: linear-gradient(180deg, rgba(10,22,40,0.92) 0%, rgba(10,22,40,0.78) 100%); z-index: 1; pointer-events: none; }
+    .ms-bg-pattern { position: fixed; top:0;left:0;right:0;bottom:0; background-image: radial-gradient(circle at 20% 50%, rgba(30,80,180,0.12) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(180,20,20,0.08) 0%, transparent 40%); pointer-events: none; z-index: 2; }
+    .ms-content { position: relative; z-index: 3; flex: 1; }
+    .ms-header { text-align: left; padding: 2.5rem 1rem 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.08); background: rgba(10,22,40,0.82); backdrop-filter: blur(10px); display: flex; flex-direction: column; gap: 1.5rem; }
+    .ms-header-top { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+    .ms-header-brand { display: flex; align-items: center; gap: 1rem; min-width: 0; }
+    .ms-header-brand-text { min-width: 0; }
+    .ms-logos { display: flex; align-items: center; justify-content: flex-start; gap: 12px; margin-bottom: 0; flex-wrap: wrap; }
+    .ms-logo-image { width: 72px; height: 72px; border-radius: 50%; overflow: hidden; background: #fff; display: grid; place-items: center; border: 1px solid rgba(255,255,255,0.15); }
+    .ms-logo-image img { width: 100%; height: 100%; object-fit: cover; clip-path: circle(50% at 50% 50%); }
+    .ms-logo-badge { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; padding: 6px 12px; font-size: 11px; font-weight: 700; letter-spacing: 1px; color: rgba(255,255,255,0.8); }
+    .ms-logo-badge.red { background: rgba(180,20,20,0.3); border-color: rgba(200,40,40,0.5); color: #ff8080; }
+    .ms-event-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.18em; opacity: 0.75; color: #fff; margin-bottom: 0.4rem; }
+    .ms-event-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.6rem, 5vw, 4rem); line-height: 1; margin-bottom: 0.3rem; color: #fff; }
+    .ms-event-title .accent { color: #e74c3c; }
+    .ms-event-subtitle { font-size: 1rem; opacity: 0.86; max-width: 40rem; line-height: 1.45; }
+    .ms-header-meta { display: flex; align-items: center; justify-content: flex-start; flex-wrap: wrap; gap: 16px; margin-top: 1rem; }
+    .ms-meta-item { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.88); background: rgba(255,255,255,0.08); padding: 8px 14px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.15); }
+    .ms-meta-item svg { width: 16px; height: 16px; flex-shrink: 0; }
+    .ms-countdown { margin: 0; display: inline-flex; flex-direction: column; align-items: flex-end; gap: 4px; color: rgba(255,255,255,0.92); min-width: 180px; }
+    .ms-countdown-label { font-size: 11px; letter-spacing: 1.8px; text-transform: uppercase; opacity: 0.78; }
+    .ms-countdown-timer { font-family: 'Bebas Neue', sans-serif; font-size: clamp(1.3rem, 3vw, 1.9rem); letter-spacing: 1px; background: rgba(255,255,255,0.08); padding: 10px 18px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.16); text-align: center; min-width: 180px; }
+    .ms-footer { text-align: left; padding: 2rem 1rem 1.5rem; border-top: 1px solid rgba(255,255,255,0.14); font-size: 13px; color: rgba(255,255,255,0.95); background: rgba(4,12,28,0.92); backdrop-filter: blur(18px); border-radius: 0 0 28px 28px; margin-top: auto; }
+    .ms-footer-grid { display: grid; grid-template-columns: repeat(3, minmax(180px, 1fr)); gap: 1.25rem; align-items: start; }
+    .ms-footer-col { min-width: 0; }
+    .ms-footer-title { font-size: 0.95rem; font-weight: 800; margin-bottom: 0.7rem; color: #ffffff; text-transform: uppercase; letter-spacing: 1px; }
+    .ms-footer-text { line-height: 1.6; color: rgba(255,255,255,0.96); margin-bottom: 4px; }
+    .ms-footer-phone { line-height: 1.6; color: rgba(255,255,255,0.96); }
+    .ms-footer-bottom { margin-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.14); padding-top: 1rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.75rem; font-size: 12px; color: rgba(255,255,255,0.84); }
+    .ms-success-icon { width: 60px; height: 60px; margin: 0 auto 16px; display: grid; place-items: center; border-radius: 50%; border: 2px solid rgba(255,255,255,0.22); color: #2ecc71; }
+    .ms-selector { max-width: 720px; margin: 2rem auto; padding: 1.5rem 1.25rem 1.25rem; background: rgba(12,26,46,0.72); border: 1px solid rgba(255,255,255,0.08); border-radius: 28px; backdrop-filter: blur(12px); }
+    .ms-section-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; letter-spacing: 1.5px; margin-bottom: 1rem; color: rgba(255,255,255,0.94); }
+    .ms-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 1.5rem; }
+    @media (max-width: 560px) { .ms-cards { grid-template-columns: 1fr; } }
+    @media (max-width: 720px) and (min-width: 561px) { .ms-cards { grid-template-columns: 1fr 1fr; } .ms-card.ctech { grid-column: span 2; } }
+    @media (max-width: 900px) {
+      .ms-header-top { flex-direction: column; align-items: stretch; }
+      .ms-countdown { align-items: flex-start; min-width: auto; }
+      .ms-header-brand { width: 100%; }
+      .ms-header-meta { justify-content: center; }
+      .ms-footer-grid { grid-template-columns: 1fr; }
+      .ms-footer-bottom { flex-direction: column; align-items: flex-start; }
+      .ms-countdown-timer { min-width: auto; width: 100%; }
+    }
+    .ms-card { border-radius: 14px; border: 2px solid transparent; padding: 1.1rem; cursor: pointer; transition: border-color 0.2s, background 0.2s; position: relative; overflow: hidden; }
+    .ms-card.free { background: rgba(25,60,140,0.4); border-color: rgba(60,120,255,0.4); }
+    .ms-card.free:hover, .ms-card.free.selected { border-color: #4a90e2; background: rgba(25,60,140,0.65); }
+    .ms-card.ctech { background: rgba(20,100,60,0.35); border-color: rgba(40,180,100,0.4); }
+    .ms-card.ctech:hover, .ms-card.ctech.selected { border-color: #2ecc71; background: rgba(20,100,60,0.6); }
+    .ms-card.paid { background: rgba(150,20,20,0.35); border-color: rgba(220,60,60,0.4); }
+    .ms-card.paid:hover, .ms-card.paid.selected { border-color: #e74c3c; background: rgba(150,20,20,0.55); }
+    .ms-card.selected .ms-check { opacity: 1 !important; transform: scale(1) !important; }
+    .ms-check { position: absolute; top: 10px; right: 10px; width: 22px; height: 22px; border-radius: 50%; background: #27ae60; display: flex; align-items: center; justify-content: center; opacity: 0; transform: scale(0.5); transition: opacity 0.2s, transform 0.2s; }
+    .ms-check svg { width: 12px; height: 12px; }
+    .ms-card-type { font-size: 10px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; opacity: 0.65; margin-bottom: 3px; }
+    .ms-card-name { font-weight: 800; font-size: 0.95rem; margin-bottom: 4px; }
+    .ms-card-price { font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; letter-spacing: 1px; line-height: 1; }
+    .ms-card-price .fcfa { font-size: 0.85rem; font-family: 'Nunito', sans-serif; font-weight: 700; opacity: 0.8; }
+    .ms-card-note { font-size: 11px; opacity: 0.6; margin-top: 4px; line-height: 1.4; }
+    .ms-card-icon { font-size: 0; margin-bottom: 8px; }
+    .ms-card-icon svg { width: 32px; height: 32px; color: currentColor; }
+    .ms-form { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 1.5rem; margin-bottom: 1.5rem; display: none; }
+    .ms-form.visible { display: block; }
+    .ms-form label { display: block; font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; opacity: 0.6; margin-bottom: 6px; margin-top: 16px; }
+    .ms-form label:first-child { margin-top: 0; }
+    .ms-form input, .ms-form select { width: 100%; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; padding: 10px 14px; color: #fff; font-size: 14px; font-family: 'Nunito', sans-serif; outline: none; transition: border-color 0.2s; }
+    .ms-form input::placeholder { color: rgba(255,255,255,0.3); }
+    .ms-form input:focus, .ms-form select:focus { border-color: rgba(100,160,255,0.6); }
+    .ms-form select option { background: #1a2a4a; color: #fff; }
+    .ms-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    @media (max-width: 480px) { .ms-form-row { grid-template-columns: 1fr; } }
+    .ms-info-box { border-radius: 10px; padding: 10px 14px; font-size: 12px; margin-top: 12px; line-height: 1.5; }
+    .ms-info-box.blue { background: rgba(25,60,140,0.3); border: 1px solid rgba(60,120,255,0.3); color: rgba(180,210,255,0.9); }
+    .ms-info-box.green { background: rgba(20,100,60,0.3); border: 1px solid rgba(40,180,100,0.3); color: rgba(150,255,180,0.9); }
+    .ms-info-box.red { background: rgba(150,20,20,0.3); border: 1px solid rgba(220,60,60,0.3); color: rgba(255,160,160,0.9); }
+    .ms-error { background: rgba(200,40,40,0.2); border: 1px solid rgba(200,40,40,0.4); border-radius: 8px; padding: 10px 14px; font-size: 13px; color: #ff9999; margin-top: 12px; display: none; }
+    .ms-btn { width: 100%; background: #c0392b; color: #fff; border: none; border-radius: 12px; padding: 16px; font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; letter-spacing: 2px; cursor: pointer; transition: background 0.2s, transform 0.1s; display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 1.25rem; }
+    .ms-btn:hover { background: #a93226; }
+    .ms-btn:active { transform: scale(0.98); }
+    .ms-btn:disabled { background: #555; cursor: not-allowed; }
+    .ms-success { display: none; text-align: center; padding: 2rem 1rem; }
+    .ms-success.visible { display: block; }
+    .ms-ticket-preview { background: #fff; color: #1a1a2e; border-radius: 16px; overflow: hidden; max-width: 420px; margin: 0 auto 1.5rem; }
+    .ms-ticket-left { background: #1a3a7c; padding: 1.25rem 1.5rem; }
+    .ms-ticket-label { font-size: 9px; font-weight: 800; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 4px; }
+    .ms-ticket-event { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; color: #fff; letter-spacing: 1.5px; line-height: 1; }
+    .ms-ticket-event .red { color: #e74c3c; }
+    .ms-ticket-body { padding: 1.25rem 1.5rem; background: #fff; }
+    .ms-ticket-row { display: flex; justify-content: space-between; align-items: baseline; padding: 5px 0; border-bottom: 1px dashed #e0e0e0; font-size: 13px; }
+    .ms-ticket-row:last-child { border-bottom: none; }
+    .ms-ticket-row .key { color: #888; font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .ms-ticket-row .val { font-weight: 800; color: #1a1a2e; }
+    .ms-ticket-footer { background: #1a1a2e; padding: 12px 1.5rem; display: flex; justify-content: space-between; align-items: center; }
+    .ms-ticket-footer .admit { font-size: 9px; font-weight: 800; letter-spacing: 2px; color: rgba(255,255,255,0.5); text-transform: uppercase; }
+    .ms-ticket-badge { color: #fff; font-size: 10px; font-weight: 800; padding: 3px 10px; border-radius: 20px; letter-spacing: 1px; }
+    .ms-whatsapp-btn { display: flex; align-items: center; justify-content: center; gap: 8px; background: #25D366; color: #fff; border: none; border-radius: 12px; padding: 14px 24px; font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; letter-spacing: 2px; cursor: pointer; width: 100%; max-width: 420px; margin: 0 auto 12px; transition: background 0.2s; }
+    .ms-whatsapp-btn:hover { background: #1da856; }
+    .ms-email-btn { display: flex; align-items: center; justify-content: center; gap: 8px; background: #007bff; color: #fff; border: none; border-radius: 12px; padding: 14px 24px; font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; letter-spacing: 2px; cursor: pointer; width: 100%; max-width: 420px; margin: 0 auto 12px; transition: background 0.2s; }
+    .ms-email-btn:hover { background: #0056b3; }
+    .ms-reset-btn { background: transparent; border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.6); border-radius: 10px; padding: 10px 20px; font-size: 13px; cursor: pointer; font-family: 'Nunito', sans-serif; width: 100%; max-width: 420px; margin: 0 auto; display: block; }
+    .ms-saving-toast { position: fixed; bottom: 24px; right: 24px; background: rgba(20,100,60,0.95); color: #fff; padding: 12px 18px; border-radius: 12px; font-size: 13px; font-weight: 700; z-index: 999; display: none; backdrop-filter: blur(8px); border: 1px solid rgba(46,204,113,0.4); }
+    .ms-saving-toast.visible { display: block; animation: fadeInUp 0.3s ease; }
+    @keyframes fadeInUp { from { opacity:0; transform: translateY(10px); } to { opacity:1; transform: translateY(0); } }
+  </style>
+</head>
+<body>
 <div class="ms-root">
   <div class="ms-bg-pattern"></div>
   <div class="ms-content">
@@ -177,7 +162,6 @@
         <div class="ms-section-title">Choisissez votre ticket</div>
 
         <div class="ms-cards">
-          <!-- ESTAM GRATUIT -->
           <div class="ms-card free" id="cardFree" onclick="selectCard('free')">
             <div class="ms-check" id="checkFree"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
             <div class="ms-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 10l8-4 8 4-8 4-8-4z"/><path d="M4 10v4a4 4 0 004 4h8a4 4 0 004-4v-4"/></svg></div>
@@ -187,7 +171,6 @@
             <div class="ms-card-note">Inscription via délégué de classe obligatoire</div>
           </div>
 
-          <!-- C-TECH 1000F -->
           <div class="ms-card ctech" id="cardCtech" onclick="selectCard('ctech')">
             <div class="ms-check" id="checkCtech"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
             <div class="ms-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M2 19h20"/></svg></div>
@@ -197,7 +180,6 @@
             <div class="ms-card-note">Centre de formation partenaire</div>
           </div>
 
-          <!-- EXTERNE 1000F -->
           <div class="ms-card paid" id="cardPaid" onclick="selectCard('paid')">
             <div class="ms-check" id="checkPaid"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
             <div class="ms-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="8" cy="8" r="3"/><circle cx="16" cy="8" r="3"/><path d="M3 21c1.5-3 4-5 7-5s5.5 2 7 5"/></svg></div>
@@ -208,7 +190,6 @@
           </div>
         </div>
 
-        <!-- FORMULAIRE -->
         <div class="ms-form" id="reservForm">
           <label>Nom complet</label>
           <input type="text" id="fname" placeholder="Ex : Jean-Paul Mbemba" />
@@ -252,7 +233,7 @@
 
           <div class="ms-error" id="formError">Veuillez remplir tous les champs obligatoires.</div>
 
-          <button class="ms-btn" onclick="submitForm()">
+          <button class="ms-btn" id="submitBtn" onclick="submitForm()">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 12V22H4V12"/><path d="M22 7H2v5h20V7z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 010-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 000-5C13 2 12 7 12 7z"/></svg>
             Réserver mon ticket
           </button>
@@ -263,7 +244,6 @@
         </div>
       </div>
 
-      <!-- SUCCESS -->
       <div class="ms-success" id="successView">
         <div class="ms-success-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17 4 12"/></svg></div>
         <div style="font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:2px;margin-bottom:4px">Réservation confirmée !</div>
@@ -306,32 +286,34 @@
   </div>
 
   <div class="ms-footer">
-      <div class="ms-footer-grid">
-        <div class="ms-footer-col">
-          <div class="ms-footer-title">Info-line</div>
-          <div class="ms-footer-phone">(+242) 06 822 91 78 / 05 557 58 32</div>
-          <div class="ms-footer-phone">(+242) 06 447 03 01 / 05 670 24 71</div>
-        </div>
-        <div class="ms-footer-col">
-          <div class="ms-footer-title">Brazzaville</div>
-          <div class="ms-footer-text">Site 1 : 233 rue de la Libération OCH (ref. entre la poissonnerie du Rail et le commissariat de l'OCH).</div>
-          <div class="ms-footer-text">Site 2 : 22 rue Likouala, Immeuble Dabo en face de la BCH, Poto-Poto.</div>
-        </div>
-        <div class="ms-footer-col">
-          <div class="ms-footer-title">Pointe-Noire</div>
-          <div class="ms-footer-text">Site 1 : SCOPRSE, N° 82 Avenue Nelson Mandela entre rond-point Ilama et la station Puma.</div>
-          <div class="ms-footer-text">Site 2 : OCH bord, immeuble entre les arrêts Deux Palmiers et Pharmacie La Grande.</div>
-        </div>
+    <div class="ms-footer-grid">
+      <div class="ms-footer-col">
+        <div class="ms-footer-title">Info-line</div>
+        <div class="ms-footer-phone">(+242) 06 822 91 78 / 05 557 58 32</div>
+        <div class="ms-footer-phone">(+242) 06 447 03 01 / 05 670 24 71</div>
       </div>
-      <div class="ms-footer-bottom">
-        <div><strong>ESTAM BDE</strong> · Marche Sportive 2026</div>
-        <div>Contactez-nous pour plus d’infos et pour toute inscription.</div>
+      <div class="ms-footer-col">
+        <div class="ms-footer-title">Brazzaville</div>
+        <div class="ms-footer-text">Site 1 : 233 rue de la Libération OCH (ref. entre la poissonnerie du Rail et le commissariat de l'OCH).</div>
+        <div class="ms-footer-text">Site 2 : 22 rue Likouala, Immeuble Dabo en face de la BCH, Poto-Poto.</div>
       </div>
+      <div class="ms-footer-col">
+        <div class="ms-footer-title">Pointe-Noire</div>
+        <div class="ms-footer-text">Site 1 : SCOPRSE, N° 82 Avenue Nelson Mandela entre rond-point Ilama et la station Puma.</div>
+        <div class="ms-footer-text">Site 2 : OCH bord, immeuble entre les arrêts Deux Palmiers et Pharmacie La Grande.</div>
+      </div>
+    </div>
+    <div class="ms-footer-bottom">
+      <div><strong>ESTAM BDE</strong> · Marche Sportive 2026</div>
+      <div>Contactez-nous pour plus d'infos et pour toute inscription.</div>
     </div>
   </div>
 </div>
 
+<div class="ms-saving-toast" id="savingToast">✓ Réservation sauvegardée</div>
+
 <script>
+  const STORAGE_KEY = 'bde_reservations';
   let selectedType = null;
   const eventDate = new Date(2026, 3, 25, 7, 0, 0);
 
@@ -340,10 +322,7 @@
     const diff = eventDate - now;
     const timer = document.getElementById('countdownTimer');
     if (!timer) return;
-    if (diff <= 0) {
-      timer.textContent = 'Départ imminent';
-      return;
-    }
+    if (diff <= 0) { timer.textContent = 'Départ imminent'; return; }
     const days = Math.floor(diff / (1000 * 60 * 60 * 24));
     const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
     const minutes = Math.floor((diff / (1000 * 60)) % 60);
@@ -362,27 +341,43 @@
   function selectCard(type) {
     selectedType = type;
     Object.keys(cards).forEach(k => {
-      const card = document.getElementById(cards[k].el);
-      const chk  = document.getElementById(cards[k].check);
-      card.classList.toggle('selected', k === type);
-      chk.style.opacity   = k === type ? '1' : '0';
+      document.getElementById(cards[k].el).classList.toggle('selected', k === type);
+      const chk = document.getElementById(cards[k].check);
+      chk.style.opacity = k === type ? '1' : '0';
       chk.style.transform = k === type ? 'scale(1)' : 'scale(0.5)';
     });
-
     document.getElementById('reservForm').classList.add('visible');
     document.getElementById('formError').style.display = 'none';
-
     document.getElementById('delegueRow').style.display  = type === 'free'  ? 'block' : 'none';
     document.getElementById('sourceRow').style.display   = type === 'paid'  ? 'block' : 'none';
     document.getElementById('noteEstam').style.display   = type === 'free'  ? 'block' : 'none';
     document.getElementById('noteCtech').style.display   = type === 'ctech' ? 'block' : 'none';
     document.getElementById('noteExterne').style.display = type === 'paid'  ? 'block' : 'none';
-
     const classLabel = document.getElementById('classLabel');
     classLabel.textContent = type === 'ctech' ? 'Formation / Niveau' : 'Classe / Filière';
     document.getElementById('fclass').placeholder = type === 'ctech' ? 'Ex : Dev Web Niveau 2' : 'Ex : L2 Réseaux';
-
     setTimeout(() => document.getElementById('reservForm').scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+  }
+
+  function generateId() {
+    return 'RES-' + Date.now().toString(36).toUpperCase() + '-' + Math.random().toString(36).substr(2,4).toUpperCase();
+  }
+
+  function saveReservation(data) {
+    try {
+      const existing = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      existing.unshift(data);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(existing));
+      showToast();
+    } catch(e) {
+      console.error('Erreur sauvegarde:', e);
+    }
+  }
+
+  function showToast() {
+    const toast = document.getElementById('savingToast');
+    toast.classList.add('visible');
+    setTimeout(() => toast.classList.remove('visible'), 3000);
   }
 
   function submitForm() {
@@ -391,8 +386,8 @@
     const cls   = document.getElementById('fclass').value.trim();
     const err   = document.getElementById('formError');
 
-    if (!selectedType)    { err.style.display = 'block'; err.textContent = 'Veuillez choisir un type de ticket.'; return; }
-    if (!name || !phone)  { err.style.display = 'block'; err.textContent = 'Nom et téléphone sont obligatoires.'; return; }
+    if (!selectedType)   { err.style.display = 'block'; err.textContent = 'Veuillez choisir un type de ticket.'; return; }
+    if (!name || !phone) { err.style.display = 'block'; err.textContent = 'Nom et téléphone sont obligatoires.'; return; }
     err.style.display = 'none';
 
     const delegue = document.getElementById('fdelegue').value.trim();
@@ -402,6 +397,19 @@
     const prices     = { free: 'GRATUIT', ctech: '1 000 FCFA', paid: '1 000 FCFA' };
     const badges     = { free: 'ÉTUDIANT', ctech: 'C-TECH', paid: 'EXTERNE' };
     const badgeColors= { free: '#1a5276', ctech: '#1a6b3a', paid: '#c0392b' };
+
+    const reservation = {
+      id: generateId(),
+      timestamp: new Date().toISOString(),
+      name, phone, classe: cls, type: selectedType,
+      typeLabel: typeLabels[selectedType],
+      price: prices[selectedType],
+      delegue: delegue || null,
+      source: source || null,
+      status: 'pending'
+    };
+
+    saveReservation(reservation);
 
     document.getElementById('tName').textContent  = name;
     document.getElementById('tPhone').textContent = phone;
@@ -430,9 +438,7 @@
     if (r.delegue) msg += `*Délégué :* ${r.delegue}\n`;
     if (r.source)  msg += `*Source :* ${r.source}\n`;
     msg += `\nSam. 25 Avril 2026 · 07h00 · CTECH → Plage`;
-
-    const url = `https://wa.me/242064149149?text=${encodeURIComponent(msg)}`;
-    window.open(url, '_blank');
+    window.open(`https://wa.me/242064149149?text=${encodeURIComponent(msg)}`, '_blank');
   }
 
   function sendEmail() {
@@ -447,11 +453,7 @@
     if (r.delegue) body += `Délégué : ${r.delegue}\n`;
     if (r.source)  body += `Source : ${r.source}\n`;
     body += `\nSam. 25 Avril 2026 · 07h00 · CTECH → Plage`;
-
-    const subject = encodeURIComponent('Réservation Ticket Marche Sportive');
-    const bodyEncoded = encodeURIComponent(body);
-    const url = `mailto:emoukouanga@gmail.com?subject=${subject}&body=${bodyEncoded}`;
-    window.open(url, '_blank');
+    window.open(`mailto:emoukouanga@gmail.com?subject=${encodeURIComponent('Réservation Ticket Marche Sportive')}&body=${encodeURIComponent(body)}`, '_blank');
   }
 
   function resetForm() {
@@ -460,8 +462,9 @@
     document.getElementById('fsource').value = '';
     Object.keys(cards).forEach(k => {
       document.getElementById(cards[k].el).classList.remove('selected');
-      document.getElementById(cards[k].check).style.opacity = '0';
-      document.getElementById(cards[k].check).style.transform = 'scale(0.5)';
+      const chk = document.getElementById(cards[k].check);
+      chk.style.opacity = '0';
+      chk.style.transform = 'scale(0.5)';
     });
     document.getElementById('reservForm').classList.remove('visible');
     document.getElementById('mainForm').style.display = 'block';

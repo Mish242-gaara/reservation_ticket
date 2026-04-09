@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BDE Admin · Marche Sportive 2026</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@400;600;700;800&display=swap');
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #06101e;
+      --surface: #0d1f38;
+      --surface2: #112444;
+      --border: rgba(255,255,255,0.08);
+      --border2: rgba(255,255,255,0.14);
+      --text: #e8edf5;
+      --muted: rgba(255,255,255,0.45);
+      --accent: #e74c3c;
+      --green: #2ecc71;
+      --blue: #4a90e2;
+      --gold: #f39c12;
+    }
+    body { font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+    /* ─── LOGIN ─── */
+    #loginScreen {
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      background: radial-gradient(ellipse at 30% 40%, rgba(30,80,180,0.14) 0%, transparent 60%),
+                  radial-gradient(ellipse at 80% 70%, rgba(200,30,30,0.08) 0%, transparent 50%), var(--bg);
+    }
+    .login-box { background: var(--surface); border: 1px solid var(--border2); border-radius: 24px; padding: 2.5rem 2rem; width: 100%; max-width: 380px; text-align: center; }
+    .login-logo { width: 56px; height: 56px; background: var(--accent); border-radius: 14px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem; }
+    .login-logo svg { width: 28px; height: 28px; color: #fff; }
+    .login-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; letter-spacing: 2px; margin-bottom: 4px; }
+    .login-sub { font-size: 13px; color: var(--muted); margin-bottom: 2rem; }
+    .login-label { display: block; text-align: left; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; margin-top: 16px; }
+    .login-input { width: 100%; background: rgba(255,255,255,0.06); border: 1px solid var(--border2); border-radius: 10px; padding: 11px 14px; color: var(--text); font-size: 14px; font-family: 'Nunito', sans-serif; outline: none; transition: border-color 0.2s; }
+    .login-input:focus { border-color: rgba(100,160,255,0.5); }
+    .login-btn { width: 100%; background: var(--accent); color: #fff; border: none; border-radius: 12px; padding: 14px; font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; letter-spacing: 2px; cursor: pointer; margin-top: 1.5rem; transition: background 0.2s; }
+    .login-btn:hover { background: #a93226; }
+    .login-error { background: rgba(200,40,40,0.2); border: 1px solid rgba(200,40,40,0.4); border-radius: 8px; padding: 10px 14px; font-size: 13px; color: #ff9999; margin-top: 12px; display: none; }
+    .login-hint { font-size: 11px; color: var(--muted); margin-top: 1rem; line-height: 1.5; }
+
+    /* ─── DASHBOARD ─── */
+    #dashboard { display: none; min-height: 100vh; flex-direction: column; }
+    #dashboard.visible { display: flex; }
+
+    .dash-header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 1rem 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; position: sticky; top: 0; z-index: 100; }
+    .dash-header-left { display: flex; align-items: center; gap: 12px; }
+    .dash-brand { font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; letter-spacing: 2px; }
+    .dash-brand span { color: var(--accent); }
+    .dash-badge { background: rgba(231,76,60,0.2); border: 1px solid rgba(231,76,60,0.4); border-radius: 6px; padding: 3px 10px; font-size: 10px; font-weight: 800; letter-spacing: 1.5px; color: #ff9999; text-transform: uppercase; }
+    .dash-user { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--muted); }
+    .dash-logout { background: rgba(255,255,255,0.06); border: 1px solid var(--border2); color: var(--muted); border-radius: 8px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: 'Nunito', sans-serif; transition: background 0.2s; }
+    .dash-logout:hover { background: rgba(255,255,255,0.1); color: #fff; }
+
+    .dash-body { flex: 1; padding: 1.5rem; max-width: 1200px; width: 100%; margin: 0 auto; }
+
+    /* Stats */
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 1.5rem; }
+    .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 1.1rem 1.25rem; }
+    .stat-label { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+    .stat-value { font-family: 'Bebas Neue', sans-serif; font-size: 2.2rem; letter-spacing: 1px; line-height: 1; }
+    .stat-value.blue { color: var(--blue); }
+    .stat-value.green { color: var(--green); }
+    .stat-value.red { color: var(--accent); }
+    .stat-value.gold { color: var(--gold); }
+    .stat-sub { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+    /* Toolbar */
+    .toolbar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 1.25rem; }
+    .toolbar-left { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .search-input { background: var(--surface); border: 1px solid var(--border2); border-radius: 10px; padding: 8px 14px; color: var(--text); font-size: 13px; font-family: 'Nunito', sans-serif; outline: none; width: 220px; transition: border-color 0.2s; }
+    .search-input:focus { border-color: rgba(100,160,255,0.5); }
+    .filter-btn { background: var(--surface); border: 1px solid var(--border2); color: var(--muted); border-radius: 8px; padding: 7px 14px; font-size: 12px; font-weight: 700; cursor: pointer; font-family: 'Nunito', sans-serif; transition: all 0.2s; letter-spacing: 0.5px; }
+    .filter-btn:hover, .filter-btn.active { background: var(--surface2); color: #fff; border-color: rgba(255,255,255,0.25); }
+    .filter-btn.active-free { border-color: var(--blue); color: var(--blue); background: rgba(74,144,226,0.1); }
+    .filter-btn.active-ctech { border-color: var(--green); color: var(--green); background: rgba(46,204,113,0.1); }
+    .filter-btn.active-paid { border-color: var(--accent); color: var(--accent); background: rgba(231,76,60,0.1); }
+    .export-btn { background: rgba(46,204,113,0.15); border: 1px solid rgba(46,204,113,0.3); color: var(--green); border-radius: 8px; padding: 7px 14px; font-size: 12px; font-weight: 700; cursor: pointer; font-family: 'Nunito', sans-serif; transition: all 0.2s; }
+    .export-btn:hover { background: rgba(46,204,113,0.25); }
+    .refresh-btn { background: rgba(74,144,226,0.1); border: 1px solid rgba(74,144,226,0.3); color: var(--blue); border-radius: 8px; padding: 7px 10px; font-size: 12px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 6px; font-family: 'Nunito', sans-serif; font-weight: 700; }
+    .refresh-btn:hover { background: rgba(74,144,226,0.2); }
+
+    /* Table */
+    .table-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+    .table-head { padding: 1rem 1.25rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+    .table-head-title { font-weight: 800; font-size: 14px; }
+    .table-count { font-size: 12px; color: var(--muted); }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    thead th { padding: 10px 14px; text-align: left; font-size: 10px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--border); white-space: nowrap; }
+    tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: rgba(255,255,255,0.03); }
+    tbody td { padding: 10px 14px; vertical-align: top; }
+    .td-name { font-weight: 800; font-size: 13px; }
+    .td-phone { color: var(--muted); font-size: 12px; margin-top: 2px; }
+    .td-class { font-size: 12px; color: var(--muted); }
+    .td-delegue { font-size: 11px; color: var(--muted); font-style: italic; }
+    .badge { display: inline-block; font-size: 10px; font-weight: 800; letter-spacing: 1px; padding: 3px 10px; border-radius: 20px; text-transform: uppercase; }
+    .badge-free  { background: rgba(74,144,226,0.18); color: #7ab3f0; border: 1px solid rgba(74,144,226,0.3); }
+    .badge-ctech { background: rgba(46,204,113,0.18); color: #6de09a; border: 1px solid rgba(46,204,113,0.3); }
+    .badge-paid  { background: rgba(231,76,60,0.18); color: #f08070; border: 1px solid rgba(231,76,60,0.3); }
+    .status-badge { display: inline-flex; align-items: center; gap: 5px; font-size: 10px; font-weight: 800; padding: 3px 10px; border-radius: 20px; cursor: pointer; transition: all 0.2s; }
+    .status-pending  { background: rgba(243,156,18,0.15); color: #f0c060; border: 1px solid rgba(243,156,18,0.3); }
+    .status-confirmed{ background: rgba(46,204,113,0.15); color: #6de09a; border: 1px solid rgba(46,204,113,0.3); }
+    .status-cancelled{ background: rgba(200,40,40,0.15); color: #f08070; border: 1px solid rgba(200,40,40,0.3); }
+    .td-date { font-size: 11px; color: var(--muted); white-space: nowrap; }
+    .td-id { font-size: 10px; color: rgba(255,255,255,0.2); font-family: monospace; }
+    .delete-btn { background: none; border: none; color: rgba(255,255,255,0.2); cursor: pointer; padding: 4px; border-radius: 6px; transition: color 0.2s, background 0.2s; }
+    .delete-btn:hover { color: var(--accent); background: rgba(231,76,60,0.1); }
+    .delete-btn svg { width: 14px; height: 14px; }
+    .empty-state { text-align: center; padding: 3rem 1rem; color: var(--muted); }
+    .empty-icon { font-size: 0; margin: 0 auto 1rem; width: 48px; height: 48px; opacity: 0.3; }
+    .empty-icon svg { width: 100%; height: 100%; }
+    .empty-title { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+    .empty-sub { font-size: 13px; }
+
+    /* Pagination */
+    .pagination { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border-top: 1px solid var(--border); font-size: 12px; color: var(--muted); flex-wrap: wrap; gap: 8px; }
+    .page-btns { display: flex; gap: 6px; }
+    .page-btn { background: var(--surface2); border: 1px solid var(--border2); color: var(--text); border-radius: 6px; padding: 5px 12px; font-size: 12px; cursor: pointer; font-family: 'Nunito', sans-serif; transition: background 0.2s; }
+    .page-btn:hover:not(:disabled) { background: rgba(255,255,255,0.1); }
+    .page-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+    .page-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+    /* Modal confirm delete */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); display: none; align-items: center; justify-content: center; z-index: 999; backdrop-filter: blur(4px); }
+    .modal-overlay.visible { display: flex; }
+    .modal-box { background: var(--surface); border: 1px solid var(--border2); border-radius: 18px; padding: 2rem; max-width: 360px; width: 90%; text-align: center; }
+    .modal-title { font-weight: 800; font-size: 16px; margin-bottom: 8px; }
+    .modal-sub { font-size: 13px; color: var(--muted); margin-bottom: 1.5rem; }
+    .modal-btns { display: flex; gap: 10px; }
+    .modal-btn { flex: 1; border: none; border-radius: 10px; padding: 12px; font-family: 'Bebas Neue', sans-serif; font-size: 1rem; letter-spacing: 1.5px; cursor: pointer; transition: opacity 0.2s; }
+    .modal-btn.cancel { background: rgba(255,255,255,0.08); color: var(--text); }
+    .modal-btn.confirm { background: var(--accent); color: #fff; }
+    .modal-btn:hover { opacity: 0.85; }
+
+    @media (max-width: 640px) {
+      .dash-body { padding: 1rem; }
+      table { font-size: 12px; }
+      thead th, tbody td { padding: 8px 10px; }
+      .search-input { width: 160px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════ LOGIN ═══════════ -->
+<div id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+    </div>
+    <div class="login-title">BDE Admin</div>
+    <div class="login-sub">Marche Sportive 2026 · Accès organisateurs</div>
+
+    <label class="login-label">Identifiant</label>
+    <input class="login-input" type="text" id="loginUser" placeholder="ex : bde_admin" autocomplete="off" />
+
+    <label class="login-label">Mot de passe</label>
+    <input class="login-input" type="password" id="loginPass" placeholder="••••••••" />
+
+    <div class="login-error" id="loginError">Identifiants incorrects. Réessayez.</div>
+    <button class="login-btn" onclick="doLogin()">Accéder au tableau de bord</button>
+    <div class="login-hint">Accès réservé aux membres du BDE ESTAM.<br>Contactez l'admin pour obtenir vos identifiants.</div>
+  </div>
+</div>
+
+<!-- ═══════════ DASHBOARD ═══════════ -->
+<div id="dashboard">
+  <div class="dash-header">
+    <div class="dash-header-left">
+      <div>
+        <div class="dash-brand">BDE <span>Admin</span></div>
+        <div style="font-size:11px;color:var(--muted)">Marche Sportive · 25 Avril 2026</div>
+      </div>
+      <div class="dash-badge">Organisateurs</div>
+    </div>
+    <div class="dash-user">
+      <span id="welcomeUser"></span>
+      <button class="dash-logout" onclick="doLogout()">Déconnexion</button>
+    </div>
+  </div>
+
+  <div class="dash-body">
+    <!-- Stats -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-label">Total inscrits</div>
+        <div class="stat-value blue" id="statTotal">0</div>
+        <div class="stat-sub">réservations reçues</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Étudiants ESTAM</div>
+        <div class="stat-value blue" id="statFree">0</div>
+        <div class="stat-sub">tickets gratuits</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Apprenants C-TECH</div>
+        <div class="stat-value green" id="statCtech">0</div>
+        <div class="stat-sub">× 1 000 FCFA</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Externes</div>
+        <div class="stat-value red" id="statPaid">0</div>
+        <div class="stat-sub">× 1 000 FCFA</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Recettes attendues</div>
+        <div class="stat-value gold" id="statRevenue">0</div>
+        <div class="stat-sub">FCFA (payants)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Confirmés</div>
+        <div class="stat-value green" id="statConfirmed">0</div>
+        <div class="stat-sub">statut confirmé</div>
+      </div>
+    </div>
+
+    <!-- Toolbar -->
+    <div class="toolbar">
+      <div class="toolbar-left">
+        <input class="search-input" type="text" id="searchInput" placeholder="Rechercher un nom, téléphone..." oninput="applyFilters()" />
+        <button class="filter-btn" id="filterAll" onclick="setFilter('all')">Tous</button>
+        <button class="filter-btn" id="filterFree" onclick="setFilter('free')">ESTAM</button>
+        <button class="filter-btn" id="filterCtech" onclick="setFilter('ctech')">C-TECH</button>
+        <button class="filter-btn" id="filterPaid" onclick="setFilter('paid')">Externes</button>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <button class="refresh-btn" onclick="loadData()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M1 4v6h6"/><path d="M23 20v-6h-6"/><path d="M20.49 9A9 9 0 005.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 013.51 15"/></svg>
+          Actualiser
+        </button>
+        <button class="export-btn" onclick="exportCSV()">Exporter CSV</button>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="table-wrap">
+      <div class="table-head">
+        <div class="table-head-title">Liste des réservations</div>
+        <div class="table-count" id="tableCount"></div>
+      </div>
+      <div style="overflow-x:auto">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Participant</th>
+              <th>Type</th>
+              <th>Classe</th>
+              <th>Délégué</th>
+              <th>Source</th>
+              <th>Prix</th>
+              <th>Statut</th>
+              <th>Date</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+      </div>
+      <div id="emptyState" class="empty-state" style="display:none">
+        <div class="empty-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="12" y2="16"/></svg></div>
+        <div class="empty-title">Aucune réservation trouvée</div>
+        <div class="empty-sub" id="emptySubText">Les inscriptions apparaîtront ici dès qu'elles seront effectuées.</div>
+      </div>
+      <div class="pagination" id="pagination"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Delete modal -->
+<div class="modal-overlay" id="deleteModal">
+  <div class="modal-box">
+    <div class="modal-title">Supprimer la réservation ?</div>
+    <div class="modal-sub">Cette action est irréversible. La réservation sera définitivement supprimée.</div>
+    <div class="modal-btns">
+      <button class="modal-btn cancel" onclick="closeModal()">Annuler</button>
+      <button class="modal-btn confirm" onclick="confirmDelete()">Supprimer</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const STORAGE_KEY = 'bde_reservations';
+  const PAGE_SIZE = 15;
+  
+  // ── Comptes BDE autorisés (user: password) ──
+  // Modifiez ces identifiants selon vos besoins
+  const ACCOUNTS = {
+    'bde_admin':    'ESTAM2026!',
+    'President':    'President@2026',
+    'Socio-Culturel':    'Socio-Culturel@2026',
+    'secretaire':   'secretaire@2026',
+  };
+
+  let currentFilter = 'all';
+  let currentPage = 1;
+  let allData = [];
+  let filteredData = [];
+  let pendingDeleteId = null;
+
+  // ─── LOGIN ───
+  document.getElementById('loginPass').addEventListener('keydown', e => {
+    if (e.key === 'Enter') doLogin();
+  });
+
+  function doLogin() {
+    const user = document.getElementById('loginUser').value.trim();
+    const pass = document.getElementById('loginPass').value;
+    const err  = document.getElementById('loginError');
+    if (ACCOUNTS[user] && ACCOUNTS[user] === pass) {
+      err.style.display = 'none';
+      document.getElementById('loginScreen').style.display = 'none';
+      const dash = document.getElementById('dashboard');
+      dash.classList.add('visible');
+      document.getElementById('welcomeUser').textContent = 'Connecté : ' + user;
+      loadData();
+    } else {
+      err.style.display = 'block';
+      document.getElementById('loginPass').value = '';
+    }
+  }
+
+  function doLogout() {
+    document.getElementById('loginScreen').style.display = 'flex';
+    document.getElementById('dashboard').classList.remove('visible');
+    document.getElementById('loginUser').value = '';
+    document.getElementById('loginPass').value = '';
+  }
+
+  // ─── DATA ───
+  function loadData() {
+    try {
+      allData = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    } catch(e) { allData = []; }
+    updateStats();
+    applyFilters();
+  }
+
+  function updateStats() {
+    const free      = allData.filter(r => r.type === 'free').length;
+    const ctech     = allData.filter(r => r.type === 'ctech').length;
+    const paid      = allData.filter(r => r.type === 'paid').length;
+    const confirmed = allData.filter(r => r.status === 'confirmed').length;
+    const revenue   = (ctech + paid) * 1000;
+    document.getElementById('statTotal').textContent     = allData.length;
+    document.getElementById('statFree').textContent      = free;
+    document.getElementById('statCtech').textContent     = ctech;
+    document.getElementById('statPaid').textContent      = paid;
+    document.getElementById('statRevenue').textContent   = revenue.toLocaleString('fr-FR');
+    document.getElementById('statConfirmed').textContent = confirmed;
+  }
+
+  function setFilter(f) {
+    currentFilter = f;
+    currentPage = 1;
+    ['All','Free','Ctech','Paid'].forEach(n => {
+      const btn = document.getElementById('filter' + n);
+      btn.className = 'filter-btn' + (n.toLowerCase() === f || (n === 'All' && f === 'all') ? ' active' : '');
+      if (n.toLowerCase() === f && f !== 'all') btn.classList.add('active-' + f);
+    });
+    applyFilters();
+  }
+
+  function applyFilters() {
+    const q = (document.getElementById('searchInput').value || '').toLowerCase();
+    filteredData = allData.filter(r => {
+      const matchType = currentFilter === 'all' || r.type === currentFilter;
+      const matchSearch = !q || r.name.toLowerCase().includes(q) || (r.phone || '').toLowerCase().includes(q) || (r.classe || '').toLowerCase().includes(q);
+      return matchType && matchSearch;
+    });
+    currentPage = 1;
+    renderTable();
+  }
+
+  function renderTable() {
+    const tbody  = document.getElementById('tableBody');
+    const empty  = document.getElementById('emptyState');
+    const pag    = document.getElementById('pagination');
+    const count  = document.getElementById('tableCount');
+
+    if (filteredData.length === 0) {
+      tbody.innerHTML = '';
+      empty.style.display = 'block';
+      pag.innerHTML = '';
+      document.getElementById('emptySubText').textContent = allData.length === 0
+        ? 'Les inscriptions apparaîtront ici dès qu\'elles seront effectuées.'
+        : 'Aucun résultat pour cette recherche.';
+      count.textContent = '';
+      return;
+    }
+    empty.style.display = 'none';
+    count.textContent = filteredData.length + ' résultat' + (filteredData.length > 1 ? 's' : '');
+
+    const totalPages = Math.ceil(filteredData.length / PAGE_SIZE);
+    const start = (currentPage - 1) * PAGE_SIZE;
+    const page  = filteredData.slice(start, start + PAGE_SIZE);
+
+    tbody.innerHTML = page.map((r, i) => {
+      const num = start + i + 1;
+      const d = new Date(r.timestamp);
+      const dateStr = d.toLocaleDateString('fr-FR') + ' ' + d.toLocaleTimeString('fr-FR', {hour:'2-digit', minute:'2-digit'});
+      const typeBadge = { free: 'badge-free', ctech: 'badge-ctech', paid: 'badge-paid' }[r.type] || '';
+      const typeLabel = { free: 'ESTAM', ctech: 'C-TECH', paid: 'Externe' }[r.type] || r.type;
+      const statusClass = { pending: 'status-pending', confirmed: 'status-confirmed', cancelled: 'status-cancelled' }[r.status] || 'status-pending';
+      const statusLabel = { pending: '⏳ En attente', confirmed: '✓ Confirmé', cancelled: '✕ Annulé' }[r.status] || 'En attente';
+      const sourceLabels = { ami: 'Ami/étudiant', whatsapp: 'WhatsApp', affiche: 'Affiche', autre: 'Autre' };
+      return `<tr>
+        <td><span style="font-size:11px;color:var(--muted)">${num}</span><br><span class="td-id">${r.id||''}</span></td>
+        <td>
+          <div class="td-name">${esc(r.name)}</div>
+          <div class="td-phone">${esc(r.phone)}</div>
+        </td>
+        <td><span class="badge ${typeBadge}">${typeLabel}</span></td>
+        <td class="td-class">${esc(r.classe||'—')}</td>
+        <td class="td-delegue">${esc(r.delegue||'—')}</td>
+        <td class="td-class">${r.source ? sourceLabels[r.source]||r.source : '—'}</td>
+        <td style="font-weight:700;font-size:12px;white-space:nowrap">${esc(r.price||'—')}</td>
+        <td>
+          <span class="status-badge ${statusClass}" onclick="cycleStatus('${r.id}')" title="Cliquer pour changer le statut">${statusLabel}</span>
+        </td>
+        <td class="td-date">${dateStr}</td>
+        <td>
+          <button class="delete-btn" onclick="askDelete('${r.id}')" title="Supprimer">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a1 1 0 011-1h4a1 1 0 011 1v2"/></svg>
+          </button>
+        </td>
+      </tr>`;
+    }).join('');
+
+    // Pagination
+    if (totalPages <= 1) { pag.innerHTML = ''; return; }
+    let html = `<span>${start+1}–${Math.min(start+PAGE_SIZE, filteredData.length)} sur ${filteredData.length}</span><div class="page-btns">`;
+    html += `<button class="page-btn" onclick="goPage(${currentPage-1})" ${currentPage===1?'disabled':''}>‹</button>`;
+    for (let p = 1; p <= totalPages; p++) {
+      html += `<button class="page-btn${p===currentPage?' active':''}" onclick="goPage(${p})">${p}</button>`;
+    }
+    html += `<button class="page-btn" onclick="goPage(${currentPage+1})" ${currentPage===totalPages?'disabled':''}>›</button></div>`;
+    pag.innerHTML = html;
+  }
+
+  function goPage(p) { currentPage = p; renderTable(); }
+
+  function esc(s) {
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  // ─── STATUS CYCLE ───
+  function cycleStatus(id) {
+    const idx = allData.findIndex(r => r.id === id);
+    if (idx === -1) return;
+    const cycle = { pending: 'confirmed', confirmed: 'cancelled', cancelled: 'pending' };
+    allData[idx].status = cycle[allData[idx].status] || 'confirmed';
+    save();
+    updateStats();
+    renderTable();
+  }
+
+  // ─── DELETE ───
+  function askDelete(id) { pendingDeleteId = id; document.getElementById('deleteModal').classList.add('visible'); }
+  function closeModal() { pendingDeleteId = null; document.getElementById('deleteModal').classList.remove('visible'); }
+  function confirmDelete() {
+    if (!pendingDeleteId) return;
+    allData = allData.filter(r => r.id !== pendingDeleteId);
+    save();
+    closeModal();
+    updateStats();
+    applyFilters();
+  }
+
+  // ─── SAVE ───
+  function save() {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(allData)); } catch(e) {}
+  }
+
+  // ─── EXPORT CSV ───
+  function exportCSV() {
+    if (allData.length === 0) { alert('Aucune donnée à exporter.'); return; }
+    const headers = ['ID','Nom','Téléphone','Type','Classe','Délégué','Source','Prix','Statut','Date'];
+    const rows = allData.map(r => [
+      r.id||'', r.name, r.phone, r.typeLabel||r.type, r.classe||'', r.delegue||'', r.source||'', r.price||'', r.status||'', r.timestamp
+    ].map(v => `"${String(v).replace(/"/g,'""')}"`));
+    const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+    const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'reservations_marche_sportive_2026.csv';
+    a.click(); URL.revokeObjectURL(url);
+  }
+
+  // Init filter buttons
+  document.getElementById('filterAll').classList.add('active');
+</script>
+</body>
+</html>
