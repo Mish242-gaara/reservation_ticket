@@ -290,6 +290,7 @@
   // ── Comptes BDE autorisés (user: password) ──
   // Modifiez ces identifiants selon vos besoins
   const ACCOUNTS = {
+    'Bureau Des Etudiants ESTAM': 'Bde@2026',
     'bde_admin':    'ESTAM2026!',
     'President':    'President@2026',
     'Socio-Culturel':    'Socio-Culturel@2026',
@@ -331,11 +332,48 @@
     document.getElementById('loginPass').value = '';
   }
 
+  function loadFromBackup() {
+    try {
+      const backup = JSON.parse(localStorage.getItem('bde_reservations_backup') || 'null');
+      if (Array.isArray(backup) && backup.length) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(backup));
+        return backup;
+      }
+    } catch (e) {
+      console.warn('Erreur lecture backup de réservation', e);
+    }
+    return null;
+  }
+
+  function syncFromWindowName() {
+    if (!window.name) return null;
+    try {
+      const payload = JSON.parse(window.name);
+      if (payload && Array.isArray(payload.bde_reservations) && payload.bde_reservations.length) {
+        const existing = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+        const merged = [...payload.bde_reservations, ...existing].filter((item, index, self) => self.findIndex(r => r.id === item.id) === index);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(merged));
+        window.name = '';
+        return merged;
+      }
+    } catch (e) {
+      console.warn('Erreur synchronisation depuis window.name', e);
+    }
+    return null;
+  }
+
   // ─── DATA ───
   function loadData() {
+    syncFromWindowName();
     try {
       allData = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-    } catch(e) { allData = []; }
+      if (!allData.length) {
+        const backup = loadFromBackup();
+        if (backup) {
+          allData = backup;
+        }
+      }
+    } catch(e) { allData = loadFromBackup() || []; }
     updateStats();
     applyFilters();
   }

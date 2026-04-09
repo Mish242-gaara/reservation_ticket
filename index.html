@@ -252,7 +252,7 @@
         <div class="ms-ticket-preview">
           <div class="ms-ticket-left">
             <div class="ms-ticket-label">ESTAM BDE organise</div>
-            <div class="ms-ticket-event">Marche <span class="red">Sp</span>rtive</div>
+            <div class="ms-ticket-event">Marche <span class="red">Spo</span>rtive</div>
             <div class="ms-ticket-label" style="margin-top:4px">Journée Intégration · 25 Avril 2026</div>
           </div>
           <div class="ms-ticket-body">
@@ -372,6 +372,12 @@
       const existing = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
       existing.unshift(data);
       localStorage.setItem(STORAGE_KEY, JSON.stringify(existing));
+      localStorage.setItem('bde_reservations_backup', JSON.stringify(existing));
+      try {
+        window.name = JSON.stringify({ bde_reservations: existing });
+      } catch (e) {
+        console.warn('Impossible de mettre à jour window.name', e);
+      }
       showToast();
     } catch(e) {
       console.error('Erreur sauvegarde:', e);
